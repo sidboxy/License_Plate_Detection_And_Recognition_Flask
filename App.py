@@ -26,12 +26,8 @@ PATH_TO_LABELS = 'object-detection.pbtxt'
 
 def graph(PATH_TO_CKPT):
     with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
-        try
-            graph_def = tf.GraphDef()
-            graph_def.ParseFromString(f.read())
-        except DecodeError:
-        pass
-
+        graph_def = tf.GraphDef()
+        graph_def.ParseFromString(f.read())
     with tf.Graph().as_default() as detection_graph:
         tf.import_graph_def(graph_def, name="")
     return detection_graph
