@@ -17,11 +17,11 @@ from object_detection.utils import ops as utils_ops
 from object_detection.utils import label_map_util
 from object_detection.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 
-
+CWD_PATH = os.getcwd()
 ### Model preparation variable
 
-PATH_TO_CKPT = r'frozen_inference_graph.pb'
-PATH_TO_LABELS = r'object-detection.pbtxt'
+PATH_TO_CKPT = os.path.join(CWD_PATH,'frozen_inference_graph.pb')
+PATH_TO_LABELS = os.path.join(CWD_PATH,'object-detection.pbtxt')
 NUM_CLASSES = 1
 
 
