@@ -12,3 +12,4 @@ opencv-contrib-python==4.2.0.34
 opencv-python-headless==4.2.0.34
 Pillow==7.0.0
 protobuf==3.13.0
+google==3.0.0
