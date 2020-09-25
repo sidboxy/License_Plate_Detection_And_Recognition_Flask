@@ -17,22 +17,19 @@ from object_detection.utils import ops as utils_ops
 from object_detection.utils import label_map_util
 from object_detection.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 
-CWD_PATH = os.getcwd()
 ### Model preparation variable
 
-PATH_TO_CKPT = os.path.join(CWD_PATH,'frozen_inference_graph.pb')
-PATH_TO_LABELS = os.path.join(CWD_PATH,'object-detection.pbtxt')
 NUM_CLASSES = 1
 
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
     od_graph_def = tf.compat.v1.GraphDef()
-    with tf.compat.v2.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+    with tf.compat.v2.io.gfile.GFile('frozen_inference_graph.pb', 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
-label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
+label_map = label_map_util.load_labelmap('object-detection.pbtxt')
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES,
                                                             use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
