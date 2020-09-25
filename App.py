@@ -7,6 +7,7 @@ import tensorflow as tf
 import cv2
 
 from PIL import Image, ImageDraw
+from google.protobuf import text_format
 from werkzeug.utils import secure_filename
 from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.models import Sequential, load_model
@@ -26,11 +27,13 @@ PATH_TO_LABELS = 'object-detection.pbtxt'
 def graph(PATH_TO_CKPT):
     with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
         graph_def = tf.GraphDef()
-        graph_def.ParseFromString(f.read())
+        text_format.Merge(proto_b, graph_def) 
+        graph_def.ParseFromString(text_format)
 
     with tf.Graph().as_default() as detection_graph:
         tf.import_graph_def(graph_def, name="")
     return detection_graph
+
 
 label_map = label_map_util.load_labelmap('object-detection.pbtxt')
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES,
