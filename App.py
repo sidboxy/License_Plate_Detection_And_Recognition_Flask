@@ -20,18 +20,21 @@ from object_detection.utils.visualization_utils import visualize_boxes_and_label
 ### Model preparation variable
 
 NUM_CLASSES = 1
+PATH_TO_CKPT = 'frozen_inference_graph.pb'
+PATH_TO_LABELS = 'object-detection.pbtxt'
 
+def graph(PATH_TO_CKPT):
+    with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
+        graph_def = tf.GraphDef()
+        graph_def.ParseFromString(f.read())
 
-detection_graph = tf.Graph()
-with detection_graph.as_default():
-    od_graph_def = tf.compat.v1.GraphDef()
-    with tf.compat.v2.io.gfile.GFile('frozen_inference_graph.pb', 'rb') as fid:
-        serialized_graph = fid.read()
-        od_graph_def.ParseFromString(serialized_graph)
-        tf.import_graph_def(od_graph_def, name='')
+    with tf.Graph().as_default() as detection_graph:
+        tf.import_graph_def(graph_def, name="")
+    return detection_graph
+
 label_map = label_map_util.load_labelmap('object-detection.pbtxt')
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES,
-                                                            use_display_name=True)
+                                                                use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
 
 
@@ -230,6 +233,8 @@ def send_img(path):
 
 @app.route('/detect_plate', methods=['POST', 'GET'])
 def detectPlate():
+    global PATH_TO_CKPT, category_index
+    detection_graph = graph(PATH_TO_CKPT)
     if request.method == 'POST':
         file = request.files['image']
         if not file: return render_template('index.html', label="No file")
