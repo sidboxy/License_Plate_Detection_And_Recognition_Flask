@@ -20,9 +20,8 @@ from object_detection.utils.visualization_utils import visualize_boxes_and_label
 
 ### Model preparation variable
 
-MODEL_NAME = r'/home/ubuntu/'
-PATH_TO_CKPT = MODEL_NAME + 'frozen_inference_graph.pb'
-PATH_TO_LABELS = r'/home/ubuntu/object-detection.pbtxt'
+PATH_TO_CKPT = 'frozen_inference_graph.pb'
+PATH_TO_LABELS = 'object-detection.pbtxt'
 NUM_CLASSES = 1
 
 
