@@ -211,7 +211,6 @@ def predict_on_segmentation(model,image_path):
     return license_plate_number
 
 app = Flask(__name__)
-server = app.server
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
