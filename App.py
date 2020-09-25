@@ -27,6 +27,7 @@ PATH_TO_LABELS = 'object-detection.pbtxt'
 def graph(PATH_TO_CKPT):
     with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
         graph_def = tf.GraphDef()
+        proto_b = f.read()
         text_format.Merge(proto_b, graph_def) 
         graph_def.ParseFromString(text_format)
 
