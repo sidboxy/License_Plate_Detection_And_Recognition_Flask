@@ -1,7 +1,7 @@
 numpy==1.18.1
 pandas==0.25.3
 gunicorn==19.9.0
-tensorflow-cpu
+tensorflow-cpu==1.15.1
 keras==2.2.5
 Flask==1.1.1
 Werkzeug==0.16.0
