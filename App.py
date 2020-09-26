@@ -25,7 +25,7 @@ PATH_TO_CKPT = 'frozen_inference_graph.pb'
 PATH_TO_LABELS = 'object-detection.pbtxt'
 
 def graph(PATH_TO_CKPT):
-    with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
+    with tf.gfile.Open(PATH_TO_CKPT, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
     with tf.Graph().as_default() as detection_graph:
