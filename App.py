@@ -25,7 +25,7 @@ PATH_TO_CKPT = 'frozen_inference_graph.pb'
 PATH_TO_LABELS = 'object-detection.pbtxt'
 
 def graph(PATH_TO_CKPT):
-    with tf.gfile.GFile(PATH_TO_CKPT, "rb") as f:
+    with tf.compat.v1.i0.gfile.GFile(PATH_TO_CKPT, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
     with tf.Graph().as_default() as detection_graph:
@@ -33,7 +33,7 @@ def graph(PATH_TO_CKPT):
     return detection_graph
 
 
-label_map = label_map_util.load_labelmap('object-detection.pbtxt')
+label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES,
                                                                 use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
